@@ -34,14 +34,27 @@ class HomePage extends StatelessWidget {
                         width: 150,
                         height: 100,
                       ),
-                      Text('Facil y rapido')
+                      Text(
+                        'Facil y rapido',
+                        style: TextStyle(
+                          fontFamily: 'Pacifico', 
+                          fontSize: 22, 
+                          fontWeight: FontWeight.w700
+                        ),
+                      )
                     ],
                   ),
                 ),
               ),
 
               SizedBox(height: 50),
-              Text('Selecciona tu rol'),
+              Text('SELECCIONA TU ROL', 
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontFamily: 'OneDay'
+                )
+              ),
               SizedBox(height: 50),
 
               CircleAvatar(
