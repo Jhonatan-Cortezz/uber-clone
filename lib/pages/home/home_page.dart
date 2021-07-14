@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
@@ -21,31 +23,7 @@ class HomePage extends StatelessWidget {
 
           child: Column(
             children: [
-              ClipPath(
-                clipper: DiagonalPathClipperTwo(),
-                child: Container(
-                  color: Colors.white,
-                  height: MediaQuery.of(context).size.height * 0.30,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Image.asset(
-                        'assets/img/logo_app.png',
-                        width: 150,
-                        height: 100,
-                      ),
-                      Text(
-                        'Facil y rapido',
-                        style: TextStyle(
-                          fontFamily: 'Pacifico', 
-                          fontSize: 22, 
-                          fontWeight: FontWeight.w700
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              bannerClipPath(context),
 
               SizedBox(height: 50),
               Text('SELECCIONA TU ROL', 
@@ -56,25 +34,57 @@ class HomePage extends StatelessWidget {
                 )
               ),
               SizedBox(height: 50),
+              _imageTypeUser('assets/img/pasajero.png'),
 
-              CircleAvatar(
-                backgroundImage: AssetImage('assets/img/pasajero.png'),
-                radius: 50,
-                backgroundColor: Colors.grey[800],
-              ),
               SizedBox(height: 10),
-              Text('Cliente', style: TextStyle(color: Colors.white)),
+              _textTypeUser('Cliente'),
 
               SizedBox(height: 50),
-              CircleAvatar(
-                backgroundImage: AssetImage('assets/img/driver.png'),
-                radius: 50,
-                backgroundColor: Colors.grey[800],
-              ),
+              _imageTypeUser('assets/img/driver.png'),
               SizedBox(height: 10),
-              Text('Conductor', style: TextStyle(color: Colors.white)),
+              _textTypeUser('Conductor')
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _textTypeUser(String typeUser){/* la linea baja en el nombre del metodo es para ponerlo privado */
+    return Text(typeUser, style: TextStyle(color: Colors.white));
+  }
+
+  Widget _imageTypeUser(String imagePath){
+    return CircleAvatar(/* assets/img/driver.png */
+      backgroundImage: AssetImage(imagePath),
+      radius: 50,
+      backgroundColor: Colors.grey[800],
+    );
+  }
+
+  Widget bannerClipPath(BuildContext context){
+    return ClipPath(
+      clipper: DiagonalPathClipperTwo(),
+      child: Container(
+        color: Colors.white,
+        height: MediaQuery.of(context).size.height * 0.30,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Image.asset(
+              'assets/img/logo_app.png',
+              width: 150,
+              height: 100,
+            ),
+            Text(
+              'Facil y rapido',
+              style: TextStyle(
+                fontFamily: 'Pacifico', 
+                fontSize: 22, 
+                fontWeight: FontWeight.w700
+              ),
+            )
+          ],
         ),
       ),
     );
