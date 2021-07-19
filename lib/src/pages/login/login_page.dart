@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:uberapp/src/pages/login/loign_controller.dart';
 import 'package:uberapp/src/utils/colors.dart' as utils;
 import 'package:uberapp/src/widgets/button_app.dart';
 
@@ -9,21 +11,34 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  LogonController _con = new LogonController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      _con.init(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
-        body: Column(
-          children: [
-            _bannerClipPath(),
-            _textDescription(),
-            _textLogin(),
-            Expanded(child: Container()),
-            _textFieldEmail(),
-            _textFieldPassword(),
-            _buttonLogin(),
-            _dontHaveAccount()
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              _bannerClipPath(),
+              _textDescription(),
+              _textLogin(),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.17),
+              _textFieldEmail(),
+              _textFieldPassword(),
+              _buttonLogin(),
+              _dontHaveAccount()
+            ],
+          ),
         ));
   }
 
@@ -87,6 +102,7 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 30),
       child: TextField(
+        controller: _con.emailController,
         decoration: InputDecoration(
             hintText: 'correo@gmail.com',
             labelText: 'Correo electronico',
@@ -103,6 +119,7 @@ class _LoginPageState extends State<LoginPage> {
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: TextField(
         obscureText: true,
+        controller: _con.passwordController,
         decoration: InputDecoration(
             labelText: 'Password',
             suffixIcon: Icon(
@@ -119,6 +136,7 @@ class _LoginPageState extends State<LoginPage> {
       child: ButtonApp(
         color: utils.Colors.uberCloneColor,
         text: 'Iniciar sesion',
+        onPressed: _con.login,
       ),
     );
   }
