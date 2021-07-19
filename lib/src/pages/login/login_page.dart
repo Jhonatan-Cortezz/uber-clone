@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:uberapp/utils/colors.dart' as utils;
+import 'package:uberapp/src/utils/colors.dart' as utils;
+import 'package:uberapp/src/widgets/button_app.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -114,12 +115,10 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buttonLogin() {
     return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-      child: RaisedButton(
-        onPressed: () {},
-        child: Text('Iniciar sesion', style: TextStyle(color: Colors.white)),
+      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+      child: ButtonApp(
         color: utils.Colors.uberCloneColor,
+        text: 'Iniciar sesion',
       ),
     );
   }

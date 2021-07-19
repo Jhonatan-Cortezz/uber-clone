@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:uberapp/pages/home/home_controller.dart';
+import 'package:uberapp/src/pages/home/home_controller.dart';
 
 class HomePage extends StatelessWidget {
   HomeController _con = new HomeController();
