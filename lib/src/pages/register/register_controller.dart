@@ -1,23 +1,19 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:uberapp/src/providers/auth_provider.dart';
 
-class LogonController {
+class RegisterController {
   BuildContext context;
 
   TextEditingController emailController = new TextEditingController();
+  TextEditingController userNameController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
+  TextEditingController confirmPasswordController = new TextEditingController();
 
   AuthProvider _authProvider;
 
   Future init(BuildContext context){
     this.context = context;
     _authProvider = new AuthProvider();
-  }
-
-  Void goToRegisterPage(){
-    Navigator.pushNamed(context, 'register');
   }
 
   void login() async {
