@@ -24,4 +24,21 @@ class AuthProvider{
 
     return true;
   }
+
+  Future<bool> rgister(String email, String password) async {
+    String errorMessage;
+
+    try {
+      await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+    } catch (error) {
+      print(error);
+      errorMessage = error.code;
+    }
+
+    if (errorMessage != null) {
+      return Future.error(errorMessage);
+    }
+
+    return true;
+  }
 }

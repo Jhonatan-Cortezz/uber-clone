@@ -155,7 +155,7 @@ class _RegisterPageState extends State<RegisterPage> {
       child: ButtonApp(
         color: utils.Colors.uberCloneColor,
         text: 'Registrar ahora',
-        onPressed: _con.login,
+        onPressed: _con.register,
       ),
     );
   }
