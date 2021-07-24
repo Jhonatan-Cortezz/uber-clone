@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:uberapp/src/models/client.dart';
 import 'package:uberapp/src/providers/auth_provider.dart';
 import 'package:uberapp/src/providers/client_provider.dart';
+import 'package:uberapp/src/utils/snackbar.dart' as utils;
 
 class RegisterController {
   BuildContext context;
+  GlobalKey<ScaffoldState> key = new GlobalKey<ScaffoldState>();
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController userNameController = new TextEditingController();
@@ -32,17 +34,17 @@ class RegisterController {
     print('email: $confirmPassword');
 
     if (userName.isEmpty && email.isEmpty && password.isEmpty && confirmPassword.isEmpty){
-      print("El usuario debe ingresar todos los campos");
+      utils.Snackbar.showSnackbar(context, key, "El usuario debe ingresar todos los campos");
       return;
     }
 
     if (confirmPassword != password) {
-      print("Las contraseñas no coninciden");
+      utils.Snackbar.showSnackbar(context, key, "Las contraseñas no coninciden");
       return;
     }
 
     if (password.length < 6) {
-      print("El password debe tener al menos 6 caracteres");
+      utils.Snackbar.showSnackbar(context, key, "El password debe tener al menos 6 caracteres");
       return;
     }
 
@@ -59,12 +61,13 @@ class RegisterController {
         ); 
 
         await _clientProvider.create(client);
-        print('El usuario se registro correctamente');
+        utils.Snackbar.showSnackbar(context, key, 'El usuario se registro correctamente');
       } else {
-        print('El usuario no se pudo registrar');
+        utils.Snackbar.showSnackbar(context, key, 'El usuario no se pudo registrar');
       }
     } catch (error) {
       print('error: $error');
+      utils.Snackbar.showSnackbar(context, key, error.toString());
     }
   }
 }
