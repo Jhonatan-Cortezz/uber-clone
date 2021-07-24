@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:uberapp/src/models/client.dart';
 import 'package:uberapp/src/providers/auth_provider.dart';
+import 'package:uberapp/src/providers/client_provider.dart';
 
 class RegisterController {
   BuildContext context;
@@ -10,10 +12,12 @@ class RegisterController {
   TextEditingController confirmPasswordController = new TextEditingController();
 
   AuthProvider _authProvider;
+  ClientProvider _clientProvider;
 
   Future init(BuildContext context){
     this.context = context;
     _authProvider = new AuthProvider();
+    _clientProvider = new ClientProvider();
   }
 
   void register() async {
@@ -46,6 +50,15 @@ class RegisterController {
       bool isRegister = await _authProvider.rgister(email, password);
 
       if(isRegister){
+
+        Client client = new Client(
+          id: _authProvider.getUser().uid,
+          email: _authProvider.getUser().email,
+          username: userName,
+          password: password
+        ); 
+
+        await _clientProvider.create(client);
         print('El usuario se registro correctamente');
       } else {
         print('El usuario no se pudo registrar');

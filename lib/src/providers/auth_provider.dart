@@ -41,4 +41,8 @@ class AuthProvider{
 
     return true;
   }
+
+  User getUser(){
+    return _firebaseAuth.currentUser;
+  }
 }
