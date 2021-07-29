@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:uberapp/src/providers/auth_provider.dart';
 import 'package:uberapp/src/utils/my_progress_dialog.dart';
+import 'package:uberapp/src/utils/shared_pref.dart';
 
 class LogonController {
   BuildContext context;
@@ -13,11 +14,17 @@ class LogonController {
 
   AuthProvider _authProvider;
   ProgressDialog _progressDialog;
+  SharedPref _sharedPref;
+  String _typeUser;
 
-  Future init(BuildContext context){
+  Future init(BuildContext context) async{
     this.context = context;
     _authProvider = new AuthProvider();
     _progressDialog = MyProgressDialog.createProgressDialog(context, "Iniciando sesion");
+    _sharedPref = new SharedPref();
+    _typeUser = await _sharedPref.read('typeUser');
+
+    print('============= TIPO DE USUARIO $_typeUser');
   }
 
   Void goToRegisterPage(){

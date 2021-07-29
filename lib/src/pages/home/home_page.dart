@@ -28,11 +28,11 @@ class HomePage extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.white, fontSize: 20, fontFamily: 'OneDay')),
               SizedBox(height: 50),
-              _imageTypeUser('assets/img/pasajero.png', context),
+              _imageTypeUser('assets/img/pasajero.png', context, 'client'),
               SizedBox(height: 10),
               _textTypeUser('Cliente'),
               SizedBox(height: 50),
-              _imageTypeUser('assets/img/driver.png', context),
+              _imageTypeUser('assets/img/driver.png', context, 'driver'),
               SizedBox(height: 10),
               _textTypeUser('Conductor')
             ],
@@ -47,9 +47,12 @@ class HomePage extends StatelessWidget {
     return Text(typeUser, style: TextStyle(color: Colors.white));
   }
 
-  Widget _imageTypeUser(String imagePath, BuildContext context) {
+  Widget _imageTypeUser(String imagePath, BuildContext context, String typeUser) {
     return GestureDetector(
-      onTap: _con.goToLoginPage,
+      onTap: (){
+        _con.goToLoginPage(typeUser);
+      },
+        
       child: CircleAvatar(
         /* assets/img/driver.png */
         backgroundImage: AssetImage(imagePath),
