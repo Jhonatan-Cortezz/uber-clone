@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:uberapp/src/models/client.dart';
 import 'package:uberapp/src/providers/auth_provider.dart';
 import 'package:uberapp/src/providers/client_provider.dart';
+import 'package:uberapp/src/utils/my_progress_dialog.dart';
 import 'package:uberapp/src/utils/snackbar.dart' as utils;
 
 class RegisterController {
@@ -15,11 +17,13 @@ class RegisterController {
 
   AuthProvider _authProvider;
   ClientProvider _clientProvider;
+  ProgressDialog _progressDialog;
 
   Future init(BuildContext context){
     this.context = context;
     _authProvider = new AuthProvider();
     _clientProvider = new ClientProvider();
+    _progressDialog = MyProgressDialog.createProgressDialog(context, "Espere un momento");
   }
 
   void register() async {
@@ -48,6 +52,7 @@ class RegisterController {
       return;
     }
 
+    _progressDialog.show();
     try {
       bool isRegister = await _authProvider.rgister(email, password);
 
@@ -61,12 +66,15 @@ class RegisterController {
         ); 
 
         await _clientProvider.create(client);
+        _progressDialog.hide();
         utils.Snackbar.showSnackbar(context, key, 'El usuario se registro correctamente');
       } else {
         utils.Snackbar.showSnackbar(context, key, 'El usuario no se pudo registrar');
+        _progressDialog.hide();
       }
     } catch (error) {
       print('error: $error');
+      _progressDialog.hide();
       utils.Snackbar.showSnackbar(context, key, error.toString());
     }
   }
