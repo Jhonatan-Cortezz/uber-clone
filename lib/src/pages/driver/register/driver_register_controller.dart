@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:uberapp/src/models/client.dart';
+import 'package:uberapp/src/models/driver.dart';
 import 'package:uberapp/src/providers/auth_provider.dart';
-import 'package:uberapp/src/providers/client_provider.dart';
+import 'package:uberapp/src/providers/driver_provider.dart';
 import 'package:uberapp/src/utils/my_progress_dialog.dart';
 import 'package:uberapp/src/utils/snackbar.dart' as utils;
 
@@ -14,15 +14,21 @@ class DriverRegisterController {
   TextEditingController userNameController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
   TextEditingController confirmPasswordController = new TextEditingController();
+  TextEditingController pin1Controller = new TextEditingController();
+  TextEditingController pin2Controller = new TextEditingController();
+  TextEditingController pin3Controller = new TextEditingController();
+  TextEditingController pin4Controller = new TextEditingController();
+  TextEditingController pin5Controller = new TextEditingController();
+  TextEditingController pin6Controller = new TextEditingController();
 
   AuthProvider _authProvider;
-  ClientProvider _clientProvider;
+  DriverProvider _driverProvider;
   ProgressDialog _progressDialog;
 
   Future init(BuildContext context){
     this.context = context;
     _authProvider = new AuthProvider();
-    _clientProvider = new ClientProvider();
+    _driverProvider = new DriverProvider();
     _progressDialog = MyProgressDialog.createProgressDialog(context, "Espere un momento");
   }
 
@@ -31,11 +37,14 @@ class DriverRegisterController {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
     String confirmPassword = confirmPasswordController.text.trim();
+    String pin1 = pin1Controller.text.trim();
+    String pin2 = pin2Controller.text.trim();
+    String pin3 = pin3Controller.text.trim();
+    String pin4 = pin4Controller.text.trim();
+    String pin5 = pin5Controller.text.trim();
+    String pin6 = pin6Controller.text.trim();
 
-    print('email: $email');
-    print('email: $userName');
-    print('email: $password');
-    print('email: $confirmPassword');
+    String plate = '$pin1$pin2$pin3 - $pin4$pin5$pin6';
 
     if (userName.isEmpty && email.isEmpty && password.isEmpty && confirmPassword.isEmpty){
       utils.Snackbar.showSnackbar(context, key, "El usuario debe ingresar todos los campos");
@@ -58,18 +67,19 @@ class DriverRegisterController {
 
       if(isRegister){
 
-        Client client = new Client(
+        Driver driver = new Driver(
           id: _authProvider.getUser().uid,
           email: _authProvider.getUser().email,
           username: userName,
-          password: password
+          password: password,
+          plate: plate
         ); 
 
-        await _clientProvider.create(client);
+        await _driverProvider.create(driver);
         _progressDialog.hide();
-        utils.Snackbar.showSnackbar(context, key, 'El usuario se registro correctamente');
+        utils.Snackbar.showSnackbar(context, key, 'El driver se registro correctamente');
       } else {
-        utils.Snackbar.showSnackbar(context, key, 'El usuario no se pudo registrar');
+        utils.Snackbar.showSnackbar(context, key, 'El driver no se pudo registrar');
         _progressDialog.hide();
       }
     } catch (error) {

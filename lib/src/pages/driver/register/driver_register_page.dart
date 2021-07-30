@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:uberapp/src/pages/driver/register/driver_register_controller.dart';
 import 'package:uberapp/src/utils/colors.dart' as utils;
+import 'package:uberapp/src/utils/otp_widget.dart';
 import 'package:uberapp/src/widgets/button_app.dart';
 
 class DriverRegisterPage extends StatefulWidget {
@@ -32,6 +33,18 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> {
             children: [
               _bannerClipPath(),
               _textLogin(),
+              _textVehiclePlate(),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 25),
+                child: OTPFields(
+                  pin1: _con.pin1Controller,
+                  pin2: _con.pin2Controller,
+                  pin3: _con.pin3Controller,
+                  pin4: _con.pin4Controller,
+                  pin5: _con.pin5Controller,
+                  pin6: _con.pin6Controller,
+                ),
+              ),
               _textFieldUserName(),
               _textFieldEmail(),
               _textFieldPassword(),
@@ -76,7 +89,7 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: Text(
-        'Registro de driver',
+        'Registro',
         style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -157,6 +170,17 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> {
         color: utils.Colors.uberCloneColor,
         text: 'Registrar ahora',
         onPressed: _con.register,
+      ),
+    );
+  }
+
+  Widget _textVehiclePlate(){
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.symmetric(horizontal: 30),
+      child: Text(
+        'Placa del vehiculo',
+        style: TextStyle(color: Colors.grey[600], fontSize: 17),
       ),
     );
   }
