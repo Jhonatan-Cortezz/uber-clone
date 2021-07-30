@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class AuthProvider{
 
@@ -44,5 +45,16 @@ class AuthProvider{
 
   User getUser(){
     return _firebaseAuth.currentUser;
+  }
+
+  void checkIfUserLoggerd(BuildContext context){
+    FirebaseAuth.instance.authStateChanges().listen((User user) {
+      if(user != null){
+        print("El usuario esta logueado");
+        Navigator.pushNamedAndRemoveUntil(context, 'client/map', (route) => false);
+      } else {
+        print("El usuario no esta logueado");
+      }
+    });
   }
 }
