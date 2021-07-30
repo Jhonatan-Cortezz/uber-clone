@@ -28,7 +28,11 @@ class LogonController {
   }
 
   Void goToRegisterPage(){
-    Navigator.pushNamed(context, 'register');
+    if (_typeUser == 'client') {
+      Navigator.pushNamed(context, 'client/register');
+    } else {
+      Navigator.pushNamed(context, 'driver/register');
+    }
   }
 
   void login() async {

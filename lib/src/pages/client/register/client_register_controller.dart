@@ -6,7 +6,7 @@ import 'package:uberapp/src/providers/client_provider.dart';
 import 'package:uberapp/src/utils/my_progress_dialog.dart';
 import 'package:uberapp/src/utils/snackbar.dart' as utils;
 
-class RegisterController {
+class ClientRegisterController {
   BuildContext context;
   GlobalKey<ScaffoldState> key = new GlobalKey<ScaffoldState>();
 

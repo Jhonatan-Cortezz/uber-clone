@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:uberapp/src/pages/register/register_controller.dart';
+import 'package:uberapp/src/pages/driver/register/driver_register_controller.dart';
 import 'package:uberapp/src/utils/colors.dart' as utils;
 import 'package:uberapp/src/widgets/button_app.dart';
 
-class RegisterPage extends StatefulWidget {
+class DriverRegisterPage extends StatefulWidget {
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _DriverRegisterPageState createState() => _DriverRegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-  RegisterController _con = new RegisterController();
+class _DriverRegisterPageState extends State<DriverRegisterPage> {
+  DriverRegisterController _con = new DriverRegisterController();
 
   @override
   void initState() {
@@ -76,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: Text(
-        'Registro',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        'Registro de driver',
         style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,

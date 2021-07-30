@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:uberapp/src/pages/driver/register/driver_register_page.dart';
 import 'package:uberapp/src/pages/home/home_page.dart';
 import 'package:uberapp/src/pages/login/login_page.dart';
-import 'package:uberapp/src/pages/register/register_page.dart';
+import 'package:uberapp/src/pages/client/register/client_register_page.dart';
 import 'package:uberapp/src/utils/colors.dart' as utils;
 
 void main() async {
@@ -32,7 +33,8 @@ class _MyAppState extends State<MyApp> {
       routes: {
         'home': (BuildContext context) => HomePage(),
         'login': (BuildContext context) => LoginPage(),
-        'register': (BuildContext context) => RegisterPage(),
+        'client/register': (BuildContext context) => ClientRegisterPage(),
+        'driver/register': (BuildContext context) => DriverRegisterPage(),
       },
     );
   }
