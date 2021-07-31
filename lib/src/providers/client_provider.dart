@@ -22,4 +22,13 @@ class ClientProvider{
       return Future.error(errorMessage);
     }
   }
+
+  Future<Client> getById(String id) async{
+    DocumentSnapshot documentSnapshot = await _ref.doc(id).get();
+    if(documentSnapshot.exists){
+      Client client  = Client.fromJson(documentSnapshot.data());
+      return client;
+    } 
+    return null;
+  }
 }

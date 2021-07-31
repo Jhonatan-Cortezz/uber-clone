@@ -1,16 +1,27 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:uberapp/src/pages/home/home_controller.dart';
 
-class HomePage extends StatelessWidget {
-  HomeController _con = new HomeController();
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
 
+class _HomePageState extends State<HomePage> {
+  HomeController _con = new HomeController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      _con.init(context);
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    _con.init(context);
-
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(

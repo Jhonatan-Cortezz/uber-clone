@@ -22,4 +22,13 @@ class DriverProvider{
       return Future.error(errorMessage);
     }
   }
+
+  Future<Driver> getById(String id) async{
+    DocumentSnapshot documentSnapshot = await _ref.doc(id).get();
+    if(documentSnapshot.exists){
+      Driver driver = Driver.fromJson(documentSnapshot.data());
+      return driver;
+    }
+    return null;
+  }
 }
