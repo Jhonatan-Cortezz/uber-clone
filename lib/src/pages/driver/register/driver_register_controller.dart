@@ -77,6 +77,7 @@ class DriverRegisterController {
 
         await _driverProvider.create(driver);
         _progressDialog.hide();
+        Navigator.pushNamedAndRemoveUntil(context, 'driver/map', (route) => false);
         utils.Snackbar.showSnackbar(context, key, 'El driver se registro correctamente');
       } else {
         utils.Snackbar.showSnackbar(context, key, 'El driver no se pudo registrar');

@@ -50,7 +50,7 @@ class LogonController {
       _progressDialog.hide();
       if(isLogin){
         print('El usuario esta logueado');
-        Navigator.pushNamedAndRemoveUntil(context, 'client/map', (route) => false);
+        // Navigator.pushNamedAndRemoveUntil(context, 'client/map', (route) => false);
       } else {
         print('El usuario no se pudo autenticar');
       }

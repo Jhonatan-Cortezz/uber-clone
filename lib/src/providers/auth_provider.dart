@@ -47,11 +47,25 @@ class AuthProvider{
     return _firebaseAuth.currentUser;
   }
 
-  void checkIfUserLoggerd(BuildContext context){
+  bool isSignedIn(){
+    final currentUser = _firebaseAuth.currentUser;
+    
+    if (currentUser == null) {
+      return false;
+    }
+
+    return true;
+  }
+
+  void checkIfUserLoggerd(BuildContext context, String typeUser){
     FirebaseAuth.instance.authStateChanges().listen((User user) {
-      if(user != null){
+      if(user != null && typeUser != null ){
+        if (typeUser == 'client') {
+          Navigator.pushNamedAndRemoveUntil(context, 'client/map', (route) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(context, 'driver/map', (route) => false);
+        }
         print("El usuario esta logueado");
-        Navigator.pushNamedAndRemoveUntil(context, 'client/map', (route) => false);
       } else {
         print("El usuario no esta logueado");
       }

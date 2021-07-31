@@ -8,12 +8,25 @@ class HomeController {
   BuildContext context;
   SharedPref _sharedPref;
   AuthProvider _authProvider;
+  String _typeUser;
 
-  Future init(BuildContext context) {
+  Future init(BuildContext context) async {
     this.context = context;
     _sharedPref = new SharedPref();
     _authProvider = new AuthProvider();
-    _authProvider.checkIfUserLoggerd(context);
+    _typeUser = await _sharedPref.read('typeUser');
+    checIfUserIsAuth();
+  }
+
+  void checIfUserIsAuth(){
+    bool isSigned = _authProvider.isSignedIn();
+    if (isSigned) {
+      if(_typeUser == 'client'){
+        Navigator.pushNamedAndRemoveUntil(context, 'client/map', (route) => false);
+      } else {
+        Navigator.pushNamedAndRemoveUntil(context, 'driver/map', (route) => false);
+      }
+    }
   }
 
   /* este metodo no retorna nada */
