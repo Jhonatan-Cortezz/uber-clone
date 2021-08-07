@@ -141,7 +141,12 @@ class DriverMapController{
       markerId: id,
       icon: iconMarker,
       position: LatLng(lat, lng),
-      infoWindow: InfoWindow(title: title, snippet: content)
+      infoWindow: InfoWindow(title: title, snippet: content),
+      draggable: false,
+      zIndex: 2,
+      flat: true,
+      anchor: Offset(0.5, 0.5),
+      rotation: _position.heading
     );
 
     markers[id] = marker; 
