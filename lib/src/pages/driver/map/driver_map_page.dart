@@ -24,6 +24,7 @@ class _DriverMapPageState extends State<DriverMapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // body: _googleMapsWidget()
+      key: _con.key,
       body: Stack(
         children: [
           _googleMapsWidget(),
@@ -52,6 +53,8 @@ class _DriverMapPageState extends State<DriverMapPage> {
       mapType: MapType.normal,
       initialCameraPosition: _con.initialPosition,
       onMapCreated: _con.onMapCreated,
+      myLocationEnabled: true,
+      myLocationButtonEnabled: true,
     );
   }
 
