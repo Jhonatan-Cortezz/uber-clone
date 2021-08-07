@@ -19,9 +19,14 @@ class DriverMapController{
 
   Position _position;
   StreamSubscription<Position> _positionStream;
+  BitmapDescriptor markerDriver;
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  Function refresh;
 
-  Future init(BuildContext context){
+  Future init(BuildContext context, Function refresh) async {
     this.context = context;
+    this.refresh = refresh;
+    markerDriver = await createMarkerImageFromAsset('assets/img/taxi_icon.png');
     checkGPS();
   }
 
@@ -35,12 +40,16 @@ class DriverMapController{
       await _determinePosition();
       _position = await Geolocator.getLastKnownPosition();
       centerPosition();
+      addMarker('driver', _position.latitude, _position.longitude, 'Tu posicion', 'content', markerDriver);
+      refresh();
       _positionStream = Geolocator.getPositionStream(
         desiredAccuracy: LocationAccuracy.best,
         distanceFilter: 1
       ).listen((Position position) {
         _position = position;
+        addMarker('driver', _position.latitude, _position.longitude, 'Tu posicion', 'content', markerDriver);
         animateCamaraToPosition(_position.latitude, _position.longitude);
+        refresh();
       });
     } catch (e) {
       print('Erroe en la localizacion $e');
@@ -118,5 +127,23 @@ class DriverMapController{
         )
       ));
     }
+  }
+
+  Future<BitmapDescriptor> createMarkerImageFromAsset(String path) async {
+    ImageConfiguration configuration = ImageConfiguration();
+    BitmapDescriptor bitmapDescriptor = await BitmapDescriptor.fromAssetImage(configuration, path);
+    return bitmapDescriptor;
+  }
+
+  void addMarker(String markerId, double lat, double lng, String title, String content, BitmapDescriptor iconMarker){
+    MarkerId id = MarkerId(markerId);
+    Marker marker = Marker(
+      markerId: id,
+      icon: iconMarker,
+      position: LatLng(lat, lng),
+      infoWindow: InfoWindow(title: title, snippet: content)
+    );
+
+    markers[id] = marker; 
   }
 }
