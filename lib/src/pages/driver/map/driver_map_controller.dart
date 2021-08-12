@@ -7,7 +7,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as location;
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:uberapp/src/models/driver.dart';
 import 'package:uberapp/src/providers/auth_provider.dart';
+import 'package:uberapp/src/providers/driver_provider.dart';
 import 'package:uberapp/src/providers/geo_fire_provider.dart';
 import 'package:uberapp/src/utils/my_progress_dialog.dart';
 import 'package:uberapp/src/utils/snackbar.dart' as utils;
@@ -27,8 +29,11 @@ class DriverMapController{
   BitmapDescriptor markerDriver;
   GeoFireProvider _geoFireProvider;
   AuthProvider _authProvider;
+  DriverProvider _driverProvider;
+  Driver driver;
   bool isConnect = false;
   StreamSubscription<DocumentSnapshot> _statusSuscription;
+  StreamSubscription<DocumentSnapshot> _driverInfoSuscription;
   ProgressDialog _dialog;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   Function refresh;
@@ -38,9 +43,19 @@ class DriverMapController{
     this.refresh = refresh;
     _geoFireProvider = new GeoFireProvider();
     _authProvider = new AuthProvider();
+    _driverProvider = new DriverProvider();
     _dialog = MyProgressDialog.createProgressDialog(context, 'Conectandose...');
     markerDriver = await createMarkerImageFromAsset('assets/img/taxi_icon.png');
     checkGPS();
+    getDriverInfo();
+  }
+
+  void getDriverInfo(){
+    Stream<DocumentSnapshot> driverStream = _driverProvider.getByIdStream(_authProvider.getUser().uid);
+    _driverInfoSuscription = driverStream.listen((DocumentSnapshot documen) {
+      driver = Driver.fromJson(documen.data());
+      refresh();
+    });
   }
 
   void openDrawer(){
@@ -50,6 +65,7 @@ class DriverMapController{
   void dispose(){
     _positionStream?.cancel();
     _statusSuscription?.cancel();
+    _driverInfoSuscription?.cancel();
   }
 
   void onMapCreated(GoogleMapController controller){
