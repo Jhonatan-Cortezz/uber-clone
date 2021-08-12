@@ -43,6 +43,10 @@ class DriverMapController{
     checkGPS();
   }
 
+  void openDrawer(){
+    key.currentState.openDrawer();
+  }
+
   void dispose(){
     _positionStream?.cancel();
     _statusSuscription?.cancel();
