@@ -62,6 +62,11 @@ class DriverMapController{
     key.currentState.openDrawer();
   }
 
+  void signOut() async{
+    await _authProvider.signOut();
+    Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
+  }
+
   void dispose(){
     _positionStream?.cancel();
     _statusSuscription?.cancel();
